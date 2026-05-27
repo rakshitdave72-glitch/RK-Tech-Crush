@@ -1,44 +1,6 @@
 import { motion } from "framer-motion";
 import { ExternalLink } from "lucide-react";
-
-const projects = [
-  {
-    title: "E-Commerce SEO Growth",
-    category: "SEO",
-    result: "+312% Organic Traffic",
-    gradient: "from-electric/20 to-electric-cyan/10",
-  },
-  {
-    title: "Corporate Website Redesign",
-    category: "Web Development",
-    result: "+89% Lead Conversion",
-    gradient: "from-purple-500/20 to-pink-500/10",
-  },
-  {
-    title: "B2B LinkedIn Campaign",
-    category: "LinkedIn Marketing",
-    result: "150+ Qualified Leads",
-    gradient: "from-blue-600/20 to-blue-400/10",
-  },
-  {
-    title: "WhatsApp Lead Engine",
-    category: "WhatsApp Marketing",
-    result: "200+ Leads/Month",
-    gradient: "from-green-500/20 to-green-400/10",
-  },
-  {
-    title: "Social Media Brand Launch",
-    category: "Social Media",
-    result: "10K+ Followers in 3 Months",
-    gradient: "from-pink-500/20 to-orange-500/10",
-  },
-  {
-    title: "Local SEO Domination",
-    category: "SEO",
-    result: "#1 Google Maps Ranking",
-    gradient: "from-cyan-500/20 to-teal-500/10",
-  },
-];
+import { PORTFOLIO_PROJECTS } from "../data/portfolio";
 
 export default function PortfolioSection() {
   return (
@@ -48,39 +10,76 @@ export default function PortfolioSection() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mx-auto mb-16 max-w-2xl text-center"
+          className="mx-auto mb-16 max-w-3xl text-center"
         >
-          <span className="text-sm font-semibold uppercase tracking-widest text-electric">Our Work</span>
-          <h2 className="mt-3 font-display text-3xl font-bold sm:text-4xl">
-            Projects That <span className="gradient-text">Deliver Results</span>
+          <span className="inline-block rounded-full border border-electric/20 bg-electric/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-electric">
+            Our Work
+          </span>
+          <h2 className="mt-4 font-display text-3xl font-bold sm:text-4xl lg:text-5xl">
+            Results That{" "}
+            <span className="gradient-text">Speak for Themselves</span>
           </h2>
+          <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-white/55">
+            A selection of our recent projects and the measurable impact we&apos;ve delivered for our
+            clients.
+          </p>
         </motion.div>
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {projects.map((project, i) => (
-            <motion.div
+          {PORTFOLIO_PROJECTS.map((project, i) => (
+            <motion.article
               key={project.title}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.08 }}
-              className="group relative overflow-hidden rounded-2xl border border-white/5 bg-white/[0.03] transition hover:border-electric/20 hover:shadow-neon"
+              transition={{ delay: i * 0.08, duration: 0.45 }}
+              className="group relative cursor-pointer overflow-hidden rounded-xl border border-white/[0.06] bg-[#0a1628] card-glow"
             >
-              <div className={`flex h-48 items-center justify-center bg-gradient-to-br ${project.gradient}`}>
-                <div className="text-center">
-                  <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/60">
-                    {project.category}
-                  </span>
-                  <p className="mt-3 font-display text-lg font-bold text-white/80">{project.result}</p>
+              {/* Image */}
+              <div className="relative h-48 overflow-hidden">
+                <img
+                  src={project.image}
+                  alt={project.title}
+                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  loading="lazy"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0a1628] via-[#0a1628]/40 to-transparent" />
+
+                {/* Category badge */}
+                <span
+                  className="absolute left-3 top-3 rounded-full px-2 py-1 text-xs font-medium"
+                  style={{
+                    background: project.badgeBg,
+                    border: `1px solid ${project.badgeBorder}`,
+                    color: project.badgeColor,
+                  }}
+                >
+                  {project.category}
+                </span>
+
+                {/* External link on hover */}
+                <div className="absolute right-3 top-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                  <div
+                    className="flex h-8 w-8 items-center justify-center rounded-full border"
+                    style={{
+                      background: "rgba(0, 180, 255, 0.2)",
+                      borderColor: "rgba(0, 180, 255, 0.4)",
+                    }}
+                  >
+                    <ExternalLink className="h-4 w-4 text-[#00b4ff]" />
+                  </div>
                 </div>
               </div>
+
+              {/* Content */}
               <div className="p-5">
-                <div className="flex items-center justify-between">
-                  <h3 className="font-display text-lg font-semibold">{project.title}</h3>
-                  <ExternalLink className="h-4 w-4 text-white/30 transition group-hover:text-electric" />
-                </div>
+                <p className="mb-1 text-sm font-bold" style={{ color: project.metricColor }}>
+                  {project.metric}
+                </p>
+                <h3 className="mb-2 font-semibold text-white">{project.title}</h3>
+                <p className="text-sm leading-relaxed text-white/50">{project.description}</p>
               </div>
-            </motion.div>
+            </motion.article>
           ))}
         </div>
       </div>

@@ -16,12 +16,12 @@ export default {
         },
       },
       fontFamily: {
-        sans: ["Inter", "system-ui", "sans-serif"],
-        display: ["Rajdhani", "Inter", "sans-serif"],
+        sans: ["Geist", "Inter", "system-ui", "sans-serif"],
+        display: ["Geist", "Inter", "system-ui", "sans-serif"],
       },
       boxShadow: {
-        neon: "0 0 20px rgba(0, 162, 255, 0.35)",
-        "neon-lg": "0 0 40px rgba(0, 162, 255, 0.45)",
+        neon: "0 8px 30px rgba(0, 0, 0, 0.28)",
+        "neon-lg": "0 12px 42px rgba(0, 0, 0, 0.34)",
       },
       backgroundImage: {
         "grid-pattern":

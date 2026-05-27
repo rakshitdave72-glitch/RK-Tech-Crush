@@ -41,11 +41,12 @@ export default function HeroSection() {
             </a>
           </div>
 
-          <div className="mt-10 grid grid-cols-3 gap-4 border-t border-white/5 pt-8">
+          <div className="mt-10 grid grid-cols-2 gap-4 border-t border-white/5 pt-8 sm:grid-cols-4">
             {[
-              { icon: TrendingUp, label: "6+ Years", sub: "Experience" },
-              { icon: Users, label: "100+", sub: "Clients Served" },
-              { icon: BarChart3, label: "Real ROI", sub: "Results Driven" },
+              { icon: BarChart3, label: "150+", sub: "Projects Delivered" },
+              { icon: TrendingUp, label: "98%", sub: "Client Satisfaction" },
+              { icon: Users, label: "6+", sub: "Years Experience" },
+              { icon: Zap, label: "50+", sub: "Happy Clients" },
             ].map(({ icon: Icon, label, sub }) => (
               <div key={label}>
                 <Icon className="mb-2 h-5 w-5 text-electric" />
