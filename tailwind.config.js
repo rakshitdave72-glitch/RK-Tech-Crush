@@ -22,10 +22,20 @@ export default {
       boxShadow: {
         neon: "0 8px 30px rgba(0, 0, 0, 0.28)",
         "neon-lg": "0 12px 42px rgba(0, 0, 0, 0.34)",
+        "neon-blue": "0 4px 24px rgba(0, 162, 255, 0.35), 0 0 0 1px rgba(0, 162, 255, 0.15)",
+        "neon-blue-lg": "0 8px 40px rgba(0, 162, 255, 0.5), 0 0 0 1px rgba(0, 162, 255, 0.25)",
+        "card-hover": "0 0 0 1px rgba(0, 162, 255, 0.15), 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 50px rgba(0, 162, 255, 0.08)",
       },
       backgroundImage: {
         "grid-pattern":
-          "linear-gradient(rgba(0,162,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,162,255,0.03) 1px, transparent 1px)",
+          "linear-gradient(rgba(0,162,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(0,162,255,0.04) 1px, transparent 1px)",
+      },
+      animation: {
+        "float-slow": "float-slow 6s ease-in-out infinite",
+        "float-medium": "float-medium 4.5s ease-in-out infinite",
+        "pulse-glow": "pulse-glow 2.5s ease-in-out infinite",
+        "spin-slow": "spin-slow 18s linear infinite",
+        "spin-reverse": "spin-reverse 12s linear infinite",
       },
     },
   },

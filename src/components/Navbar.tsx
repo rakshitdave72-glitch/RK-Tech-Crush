@@ -16,7 +16,10 @@ export default function Navbar() {
   };
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 border-b border-white/5 bg-navy-950/80 backdrop-blur-xl">
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-white/5 bg-navy-950/85 backdrop-blur-xl">
+      {/* Top glow line */}
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-electric/40 to-transparent" />
+
       <div className="section-container flex h-16 items-center justify-between lg:h-20">
         <Link to="/" className="flex items-center gap-3">
           <img
@@ -28,7 +31,7 @@ export default function Navbar() {
             <span className="font-display text-lg font-bold tracking-wide text-white lg:text-xl">
               R.K <span className="text-electric">TECH</span> CRUSH
             </span>
-            <p className="text-[10px] tracking-[0.2em] text-white/50">{SITE.tagline}</p>
+            <p className="text-[10px] tracking-[0.2em] text-white/40">{SITE.tagline}</p>
           </div>
         </Link>
 
@@ -43,7 +46,7 @@ export default function Navbar() {
               >
                 <div
                   className={`flex items-center rounded-lg px-1 py-1 text-sm font-medium transition hover:text-electric ${
-                    location.pathname.startsWith("/services") ? "text-electric" : "text-white/70"
+                    location.pathname.startsWith("/services") ? "text-electric" : "text-white/65"
                   }`}
                 >
                   <Link to={link.href} className="rounded-md px-2 py-1">
@@ -55,7 +58,7 @@ export default function Navbar() {
                     onClick={() => setServicesOpen((prev) => !prev)}
                     type="button"
                   >
-                    <ChevronDown className="h-4 w-4" />
+                    <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${servicesOpen ? "rotate-180" : ""}`} />
                   </button>
                 </div>
                 <AnimatePresence>
@@ -64,13 +67,14 @@ export default function Navbar() {
                       initial={{ opacity: 0, y: 8 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: 8 }}
-                      className="absolute left-0 top-full w-64 rounded-xl border border-white/10 bg-navy-900/95 p-2 shadow-neon backdrop-blur-xl"
+                      transition={{ duration: 0.15 }}
+                      className="absolute left-0 top-full w-64 rounded-xl border border-white/10 bg-navy-900/98 p-2 shadow-[0_8px_40px_rgba(0,0,0,0.5),0_0_0_1px_rgba(0,162,255,0.08)] backdrop-blur-xl"
                     >
                       {SERVICES.map((s) => (
                         <Link
                           key={s.slug}
                           to={`/services/${s.slug}`}
-                          className="block rounded-lg px-3 py-2.5 text-sm text-white/70 transition hover:bg-electric/10 hover:text-electric"
+                          className="block rounded-lg px-3 py-2.5 text-sm text-white/65 transition hover:bg-electric/10 hover:text-electric"
                           onClick={() => setServicesOpen(false)}
                         >
                           {s.title}
@@ -85,7 +89,7 @@ export default function Navbar() {
                 key={link.label}
                 to={link.href}
                 className={`rounded-lg px-3 py-2 text-sm font-medium transition hover:text-electric ${
-                  isActive(link.href) ? "text-electric" : "text-white/70"
+                  isActive(link.href) ? "text-electric" : "text-white/65"
                 }`}
               >
                 {link.label}
@@ -95,7 +99,10 @@ export default function Navbar() {
         </nav>
 
         <div className="hidden items-center gap-3 lg:flex">
-          <a href={`tel:${SITE.phone}`} className="flex items-center gap-2 text-sm text-white/70 hover:text-electric">
+          <a
+            href={`tel:${SITE.phone}`}
+            className="flex items-center gap-2 text-sm text-white/60 transition hover:text-electric"
+          >
             <Phone className="h-4 w-4" />
             {SITE.phone}
           </a>
@@ -105,7 +112,7 @@ export default function Navbar() {
         </div>
 
         <button
-          className="rounded-lg p-2 text-white lg:hidden"
+          className="rounded-lg p-2 text-white/70 transition hover:text-white lg:hidden"
           onClick={() => setOpen(!open)}
           aria-label="Toggle menu"
         >
@@ -119,33 +126,37 @@ export default function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="border-t border-white/5 bg-navy-950/95 lg:hidden"
+            className="border-t border-white/5 bg-navy-950/98 lg:hidden"
           >
             <div className="section-container space-y-1 py-4">
               {NAV_LINKS.map((link) => (
                 <Link
                   key={link.label}
                   to={link.href}
-                  className="block rounded-lg px-3 py-2.5 text-sm font-medium text-white/80 hover:bg-white/5"
+                  className="block rounded-lg px-3 py-2.5 text-sm font-medium text-white/75 transition hover:bg-white/5 hover:text-electric"
                   onClick={() => setOpen(false)}
                 >
                   {link.label}
                 </Link>
               ))}
               <div className="border-t border-white/5 pt-2">
-                <p className="px-3 py-1 text-xs uppercase tracking-wider text-white/40">Services</p>
+                <p className="px-3 py-1 text-xs uppercase tracking-wider text-white/35">Services</p>
                 {SERVICES.map((s) => (
                   <Link
                     key={s.slug}
                     to={`/services/${s.slug}`}
-                    className="block rounded-lg px-3 py-2 text-sm text-white/70 hover:text-electric"
+                    className="block rounded-lg px-3 py-2 text-sm text-white/65 transition hover:text-electric"
                     onClick={() => setOpen(false)}
                   >
                     {s.title}
                   </Link>
                 ))}
               </div>
-              <Link to="/#contact" className="btn-primary mt-3 w-full text-center" onClick={() => setOpen(false)}>
+              <Link
+                to="/#contact"
+                className="btn-primary mt-3 w-full text-center"
+                onClick={() => setOpen(false)}
+              >
                 Free Consultation
               </Link>
             </div>
