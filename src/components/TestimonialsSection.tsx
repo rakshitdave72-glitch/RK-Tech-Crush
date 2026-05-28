@@ -1,138 +1,248 @@
-import { motion, AnimatePresence } from "framer-motion";
-import { Quote, Star } from "lucide-react";
-import { useState } from "react";
+import { motion } from "framer-motion";
+import { Star } from "lucide-react";
 
 const testimonials = [
   {
-    initials: "AM",
-    name: "Arjun Mehta",
-    role: "CEO, TechVentures India",
-    text: "R.K Tech Crush transformed our online presence completely. Our organic traffic increased by 280% in just 4 months. Their SEO strategies are genuinely data-driven and the results speak for themselves.",
+    initials: "JM",
+    name: "James Mitchell",
+    role: "CEO, UK",
+    country: "🇬🇧",
+    text: "Working with R.K Tech Crush was a game changer. They rebuilt our entire website and launched a targeted LinkedIn campaign that brought in over 200% more qualified leads within 90 days. Sharp, responsive, and genuinely invested in your growth.",
+    metric: "+200% Leads",
+    metricColor: "#00a2ff",
     color: "#00a2ff",
   },
   {
-    initials: "PS",
-    name: "Priya Sharma",
-    role: "Founder, StyleHub",
-    text: "The website they built for us is absolutely stunning and converts like crazy. We went from 2% to 8% conversion rate after the redesign. Best investment we've made for our business.",
+    initials: "SC",
+    name: "Sophie Chambers",
+    role: "Founder, UK",
+    country: "🇬🇧",
+    text: "Our subscription numbers were flat before we brought in R.K Tech Crush. They redesigned our site and ran a full social media strategy. Within two months we saw a massive spike in new subscribers. Absolutely worth every penny.",
+    metric: "3x Subscribers",
+    metricColor: "#f472b6",
+    color: "#f472b6",
+  },
+  {
+    initials: "LB",
+    name: "Lucas Bernard",
+    role: "Marketing Director, France",
+    country: "🇫🇷",
+    text: "Rakshit and his team delivered a corporate website that truly reflects our brand. The SEO work they did alongside the build meant we were ranking on page one within weeks of launch. Professional, fast, and results-focused.",
+    metric: "Page 1 in 3 Weeks",
+    metricColor: "#4ade80",
+    color: "#4ade80",
+  },
+  {
+    initials: "EW",
+    name: "Emily Watson",
+    role: "Head of Digital, UK",
+    country: "🇬🇧",
+    text: "We needed a complete SEO overhaul and R.K Tech Crush delivered beyond expectations. Organic traffic grew by 280% in four months. Their technical knowledge combined with genuine care for our mission made them the perfect partner.",
+    metric: "+280% Traffic",
+    metricColor: "#00e5ff",
     color: "#00e5ff",
   },
   {
-    initials: "RG",
-    name: "Rahul Gupta",
-    role: "Director, PropMax Realty",
-    text: "Their WhatsApp marketing campaign generated over 500 qualified leads in the first month. The ROI was incredible — we closed 15 deals directly from their campaigns.",
-    color: "#4ade80",
+    initials: "DK",
+    name: "Daniel Kowalski",
+    role: "Co-Founder, USA",
+    country: "🇺🇸",
+    text: "The B2B SEO strategy they built for us was exactly what we needed to compete in our space. We went from page three to page one for our core keywords in under six months. Highly recommend for any SaaS company looking to grow organically.",
+    metric: "Page 1 Rankings",
+    metricColor: "#a855f7",
+    color: "#a855f7",
+  },
+  {
+    initials: "NV",
+    name: "Nathalie Voss",
+    role: "Owner, Canada",
+    country: "🇨🇦",
+    text: "Our online bookings have nearly doubled since R.K Tech Crush redesigned our platform and ran WhatsApp marketing campaigns for us. The team understood our brand immediately and delivered a site that our clients genuinely love using.",
+    metric: "+180% Bookings",
+    metricColor: "#f97316",
+    color: "#f97316",
+  },
+  {
+    initials: "TH",
+    name: "Thomas Hughes",
+    role: "Director, UK",
+    country: "🇬🇧",
+    text: "The SEO results were beyond what we expected. Within three months our local search visibility tripled and we started getting inbound enquiries we never had before. R.K Tech Crush knows exactly what they are doing.",
+    metric: "3x Local Visibility",
+    metricColor: "#34d399",
+    color: "#34d399",
+  },
+  {
+    initials: "AV",
+    name: "Anna Vermeer",
+    role: "CMO, Netherlands",
+    country: "🇳🇱",
+    text: "We hired R.K Tech Crush for a full e-commerce rebuild and the results were incredible. The new site loads faster, looks stunning, and our conversion rate jumped from 1.8% to 5.4% in the first month after launch.",
+    metric: "+200% Conversions",
+    metricColor: "#fb923c",
+    color: "#fb923c",
   },
 ];
 
-export default function TestimonialsSection() {
-  const [current, setCurrent] = useState(0);
+// Duplicate for seamless infinite scroll
+const row1 = [...testimonials.slice(0, 4), ...testimonials.slice(0, 4)];
+const row2 = [...testimonials.slice(4), ...testimonials.slice(4)];
 
-  const next = () => setCurrent((c) => (c + 1) % testimonials.length);
-  const prev = () => setCurrent((c) => (c - 1 + testimonials.length) % testimonials.length);
-
+function TestimonialCard({ t }: { t: (typeof testimonials)[0] }) {
   return (
-    <section className="relative py-24">
+    <div
+      className="group relative w-80 shrink-0 overflow-hidden rounded-2xl border border-white/6 bg-navy-900/80 p-6 transition-all duration-300 hover:border-electric/25 hover:shadow-card-hover hover:-translate-y-1 cursor-default"
+    >
+      {/* Glow blob top-right */}
+      <div
+        className="absolute -right-6 -top-6 h-20 w-20 rounded-full blur-2xl opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+        style={{ background: `${t.color}20` }}
+      />
+
+      {/* Top accent line */}
+      <div
+        className="absolute inset-x-0 top-0 h-[2px] rounded-t-2xl"
+        style={{ background: `linear-gradient(to right, transparent, ${t.color}80, transparent)` }}
+      />
+
+      <div className="relative">
+        {/* Stars + metric */}
+        <div className="mb-4 flex items-center justify-between">
+          <div className="flex gap-0.5">
+            {[...Array(5)].map((_, i) => (
+              <Star key={i} className="h-3 w-3 fill-yellow-400 text-yellow-400" />
+            ))}
+          </div>
+          <span
+            className="rounded-full px-2.5 py-0.5 text-[10px] font-bold"
+            style={{
+              background: `${t.metricColor}15`,
+              border: `1px solid ${t.metricColor}30`,
+              color: t.metricColor,
+            }}
+          >
+            {t.metric}
+          </span>
+        </div>
+
+        {/* Quote text */}
+        <p className="text-sm leading-relaxed text-white/65">
+          "{t.text}"
+        </p>
+
+        {/* Author */}
+        <div className="mt-5 flex items-center gap-3">
+          <div
+            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-xs font-bold text-white"
+            style={{
+              background: `linear-gradient(135deg, ${t.color}35, ${t.color}10)`,
+              border: `1px solid ${t.color}25`,
+            }}
+          >
+            {t.initials}
+          </div>
+          <div>
+            <p className="text-sm font-semibold text-white">{t.name}</p>
+            <p className="text-[11px] text-white/35">{t.country} {t.role}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default function TestimonialsSection() {
+  return (
+    <section className="relative py-24 overflow-hidden">
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-electric/20 to-transparent" />
 
-      <div className="section-container">
+      {/* Ambient glows */}
+      <div className="absolute left-1/3 top-1/2 h-80 w-80 -translate-y-1/2 rounded-full bg-electric/5 blur-[120px] pointer-events-none" />
+      <div className="absolute right-1/3 top-1/2 h-60 w-60 -translate-y-1/2 rounded-full bg-electric-cyan/4 blur-[100px] pointer-events-none" />
+
+      {/* Header */}
+      <div className="section-container relative mb-14">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mx-auto mb-16 max-w-2xl text-center"
+          className="mx-auto max-w-2xl text-center"
         >
           <span className="inline-flex items-center gap-2 rounded-full border border-electric/25 bg-electric/8 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-electric">
             Client Stories
           </span>
           <h2 className="mt-4 font-display text-3xl font-bold sm:text-4xl lg:text-5xl">
-            What Our <span className="gradient-text">Clients Say About Us</span>
+            Trusted by Businesses <span className="gradient-text">Worldwide</span>
           </h2>
           <p className="mt-4 text-white/55">
-            Real results, real clients. Here's what businesses say after working with R.K Tech Crush.
+            Real feedback from clients across the UK, USA, Europe, and beyond.
           </p>
-        </motion.div>
 
-        <div className="relative mx-auto max-w-3xl">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={current}
-              initial={{ opacity: 0, x: 30 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -30 }}
-              transition={{ duration: 0.35 }}
-              className="relative overflow-hidden rounded-2xl border border-white/8 bg-white/[0.03] p-8 sm:p-10 shadow-[0_0_60px_rgba(0,0,0,0.3)]"
-            >
-              {/* Glow accent */}
-              <div
-                className="absolute -top-10 left-1/2 h-32 w-64 -translate-x-1/2 rounded-full blur-3xl"
-                style={{ background: `${testimonials[current].color}12` }}
-              />
-
-              <div className="relative">
-                {/* Stars */}
-                <div className="mb-4 flex gap-1">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                  ))}
-                </div>
-
-                <Quote className="mb-4 h-8 w-8 text-electric/30" />
-                <p className="text-lg leading-relaxed text-white/75">
-                  "{testimonials[current].text}"
-                </p>
-
-                <div className="mt-8 flex items-center gap-4 border-t border-white/5 pt-6">
-                  <div
-                    className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full text-sm font-bold text-white"
-                    style={{ background: `${testimonials[current].color}25`, border: `1px solid ${testimonials[current].color}30` }}
-                  >
-                    {testimonials[current].initials}
-                  </div>
-                  <div>
-                    <p className="font-display text-base font-semibold text-white">
-                      {testimonials[current].name}
-                    </p>
-                    <p className="text-sm text-white/40">{testimonials[current].role}</p>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </AnimatePresence>
-
-          {/* Navigation */}
-          <div className="mt-8 flex items-center justify-center gap-4">
-            <button
-              onClick={prev}
-              className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white/60 transition hover:border-electric/30 hover:text-electric"
-              aria-label="Previous testimonial"
-            >
-              ‹
-            </button>
-            <div className="flex gap-2">
-              {testimonials.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => setCurrent(i)}
-                  className={`h-2 rounded-full transition-all duration-300 ${
-                    i === current
-                      ? "w-8 bg-electric shadow-[0_0_8px_rgba(0,162,255,0.6)]"
-                      : "w-2 bg-white/20 hover:bg-white/40"
-                  }`}
-                  aria-label={`Go to testimonial ${i + 1}`}
-                />
-              ))}
-            </div>
-            <button
-              onClick={next}
-              className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white/60 transition hover:border-electric/30 hover:text-electric"
-              aria-label="Next testimonial"
-            >
-              ›
-            </button>
+          {/* Trust pills */}
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+            {[
+              { icon: "⭐", label: "5.0 Rated" },
+              { icon: "🌍", label: "8+ Countries" },
+              { icon: "🤝", label: "50+ Clients" },
+              { icon: "📈", label: "150+ Projects" },
+            ].map((p) => (
+              <span
+                key={p.label}
+                className="flex items-center gap-1.5 rounded-full border border-white/8 bg-white/[0.04] px-4 py-1.5 text-xs font-medium text-white/60"
+              >
+                {p.icon} {p.label}
+              </span>
+            ))}
           </div>
-        </div>
+        </motion.div>
+      </div>
+
+      {/* Row 1 — scrolls left */}
+      <div className="relative mb-4">
+        {/* Edge fades */}
+        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-32 bg-gradient-to-r from-navy-950 to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-32 bg-gradient-to-l from-navy-950 to-transparent" />
+
+        <motion.div
+          className="flex gap-4 px-4"
+          animate={{ x: ["0%", "-50%"] }}
+          transition={{ duration: 40, ease: "linear", repeat: Infinity }}
+        >
+          {row1.map((t, i) => (
+            <TestimonialCard key={`r1-${i}`} t={t} />
+          ))}
+        </motion.div>
+      </div>
+
+      {/* Row 2 — scrolls right */}
+      <div className="relative">
+        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-32 bg-gradient-to-r from-navy-950 to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-32 bg-gradient-to-l from-navy-950 to-transparent" />
+
+        <motion.div
+          className="flex gap-4 px-4"
+          animate={{ x: ["-50%", "0%"] }}
+          transition={{ duration: 35, ease: "linear", repeat: Infinity }}
+        >
+          {row2.map((t, i) => (
+            <TestimonialCard key={`r2-${i}`} t={t} />
+          ))}
+        </motion.div>
+      </div>
+
+      {/* Bottom CTA */}
+      <div className="section-container relative mt-14 text-center">
+        <motion.p
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="text-sm text-white/40"
+        >
+          Ready to be our next success story?{" "}
+          <a href="/#contact" className="font-semibold text-electric transition hover:underline">
+            Let's talk →
+          </a>
+        </motion.p>
       </div>
     </section>
   );
