@@ -1,7 +1,10 @@
 import { motion } from "framer-motion";
-import { Check } from "lucide-react";
+import { Check, ExternalLink, MessageCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import type { ServicePricing } from "../data/pricing";
+import { SITE } from "../data/site";
+
+const WISE_PAYMENT_URL = import.meta.env.VITE_WISE_PAYMENT_URL as string;
 
 interface PricingSectionProps {
   pricing: ServicePricing;
@@ -18,16 +21,22 @@ export default function PricingSection({ pricing, showViewAll = false }: Pricing
           viewport={{ once: true }}
           className="mb-12 text-center"
         >
-          <span className="text-sm font-semibold uppercase tracking-widest text-electric">Pricing</span>
-          <h2 className="mt-3 font-display text-3xl font-bold">
+          <span className="inline-flex items-center gap-2 rounded-full border border-electric/25 bg-electric/8 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-electric">
+            Pricing
+          </span>
+          <h2 className="mt-4 font-display text-3xl font-bold">
             {pricing.title} <span className="gradient-text">Plans</span>
           </h2>
-          {pricing.note && <p className="mx-auto mt-3 max-w-xl text-sm text-white/50">{pricing.note}</p>}
+          {pricing.note && (
+            <p className="mx-auto mt-3 max-w-xl text-sm text-white/50">{pricing.note}</p>
+          )}
         </motion.div>
 
         <div
           className={`grid gap-6 ${
-            pricing.plans.length <= 2 ? "mx-auto max-w-3xl sm:grid-cols-2" : "sm:grid-cols-2 lg:grid-cols-4"
+            pricing.plans.length <= 2
+              ? "mx-auto max-w-3xl sm:grid-cols-2"
+              : "sm:grid-cols-2 lg:grid-cols-4"
           }`}
         >
           {pricing.plans.map((plan, i) => (
@@ -37,22 +46,24 @@ export default function PricingSection({ pricing, showViewAll = false }: Pricing
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.08 }}
-              className={`relative flex flex-col rounded-2xl border p-6 transition hover:shadow-neon ${
+              className={`relative flex flex-col rounded-2xl border p-6 transition-all duration-300 ${
                 plan.popular
-                  ? "border-electric/40 bg-electric/5 shadow-neon"
-                  : "border-white/5 bg-white/[0.03]"
+                  ? "border-electric/40 bg-electric/5 shadow-neon-blue"
+                  : "border-white/6 bg-white/[0.03] hover:border-electric/20 hover:shadow-card-hover"
               }`}
             >
               {plan.popular && (
-                <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-electric px-3 py-0.5 text-xs font-semibold text-navy-950">
-                  Popular
+                <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-gradient-to-r from-electric to-electric-cyan px-3 py-0.5 text-xs font-semibold text-navy-950">
+                  Most Popular
                 </span>
               )}
-              <p className="font-display text-lg font-semibold">{plan.duration}</p>
+
+              <p className="font-display text-lg font-semibold text-white">{plan.duration}</p>
               <p className="mt-2 font-display text-2xl font-bold" style={{ color: pricing.color }}>
                 {plan.price}
               </p>
-              <ul className="mt-6 flex-1 space-y-2.5">
+
+              <ul className="mt-5 flex-1 space-y-2.5">
                 {plan.features.map((f) => (
                   <li key={f} className="flex items-start gap-2 text-xs text-white/60">
                     <Check className="mt-0.5 h-3.5 w-3.5 shrink-0 text-electric" />
@@ -60,23 +71,39 @@ export default function PricingSection({ pricing, showViewAll = false }: Pricing
                   </li>
                 ))}
               </ul>
-              <Link
-                to="/#contact"
-                className={`mt-6 block rounded-xl py-2.5 text-center text-sm font-semibold transition ${
+
+              {/* Pay via Wise — primary CTA */}
+              <a
+                href={WISE_PAYMENT_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`mt-6 flex items-center justify-center gap-2 rounded-xl py-2.5 text-sm font-semibold transition-all duration-200 ${
                   plan.popular
-                    ? "bg-gradient-to-r from-electric to-electric-cyan text-navy-950"
-                    : "border border-white/10 bg-white/5 text-white hover:border-electric/30"
+                    ? "bg-gradient-to-r from-electric to-electric-cyan text-navy-950 shadow-neon-blue hover:opacity-90 hover:scale-[1.02]"
+                    : "border border-electric/25 bg-electric/8 text-electric hover:bg-electric/15 hover:border-electric/40"
                 }`}
               >
-                Get Started
-              </Link>
+                Pay via Wise
+                <ExternalLink className="h-3.5 w-3.5" />
+              </a>
+
+              {/* Secondary — WhatsApp first */}
+              <a
+                href={`https://wa.me/${SITE.whatsapp}?text=Hi%2C%20I%27m%20interested%20in%20the%20${encodeURIComponent(pricing.title)}%20-%20${encodeURIComponent(plan.duration)}%20plan%20(${encodeURIComponent(plan.price)})`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-2 flex items-center justify-center gap-2 rounded-xl border border-white/8 py-2 text-xs font-medium text-white/50 transition hover:border-white/20 hover:text-white/80"
+              >
+                <MessageCircle className="h-3.5 w-3.5" />
+                Ask on WhatsApp first
+              </a>
             </motion.div>
           ))}
         </div>
 
         {showViewAll && (
           <p className="mt-8 text-center text-sm text-white/50">
-            <Link to="/pricing" className="text-electric hover:underline">
+            <Link to="/pricing" className="text-electric transition hover:underline">
               View all service pricing →
             </Link>
           </p>
