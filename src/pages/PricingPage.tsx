@@ -1,13 +1,11 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Check, ArrowRight, ExternalLink, MessageCircle } from "lucide-react";
+import { Check, ArrowRight, ExternalLink } from "lucide-react";
 import SEOHead from "../components/SEOHead";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import CTASection from "../components/CTASection";
 import { ALL_PRICING } from "../data/pricing";
-import { SITE } from "../data/site";
-
 const WISE_PAYMENT_URL = import.meta.env.VITE_WISE_PAYMENT_URL as string;
 
 export default function PricingPage() {
@@ -121,7 +119,7 @@ export default function PricingPage() {
                       ))}
                     </ul>
 
-                    {/* Pay via Wise — primary CTA */}
+                    {/* Pay via Wise */}
                     <a
                       href={WISE_PAYMENT_URL}
                       target="_blank"
@@ -134,17 +132,6 @@ export default function PricingPage() {
                     >
                       Pay via Wise
                       <ExternalLink className="h-3.5 w-3.5" />
-                    </a>
-
-                    {/* Secondary — contact first */}
-                    <a
-                      href={`https://wa.me/${SITE.whatsapp}?text=Hi%2C%20I%27m%20interested%20in%20the%20${encodeURIComponent(service.title)}%20-%20${encodeURIComponent(plan.duration)}%20plan%20(${encodeURIComponent(plan.price)})`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="mt-2 flex items-center justify-center gap-2 rounded-xl border border-white/8 py-2 text-xs font-medium text-white/50 transition hover:border-white/20 hover:text-white/80"
-                    >
-                      <MessageCircle className="h-3.5 w-3.5" />
-                      Ask on WhatsApp first
                     </a>
                   </div>
                 ))}
